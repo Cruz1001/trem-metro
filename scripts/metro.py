@@ -1,47 +1,42 @@
-from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from webdriver_manager.chrome import ChromeDriverManager
+import requests
 from bs4 import BeautifulSoup
 import json
-import requests
-import os
 
 # URL da página que contém o iframe
 url = "https://www.metro.sp.gov.br/wp-content/themes/metrosp/direto-metro.php?embed=1"
 
-# Inicializa o navegador
-options = webdriver.ChromeOptions()
-options.add_argument('--headless')  # Comente para depuração
-options.add_argument('--disable-gpu')
-options.add_argument('--no-sandbox')
-options.add_argument('--disable-dev-shm-usage')
+# Fazendo a requisição HTTP para obter o conteúdo da página
+response = requests.get(url)
 
-driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
-driver.get(url)
-soup = BeautifulSoup(driver.page_source, 'html.parser')
+# Verificando se a requisição foi bem-sucedida
+if response.status_code == 200:
+    # Usando o BeautifulSoup para parsear o HTML
+    soup = BeautifulSoup(response.text, 'html.parser')
+    # Encontrando todos os elementos de linha
+    linhas = soup.find_all('li', class_='linha list-group-item')
 
-linhas = soup.find_all('li', class_='linha list-group-item')
+    linhas_data = []
 
-linhas_data = []
+    # Iterando sobre as linhas encontradas para extrair as informações
+    for linha in linhas:
+        numero = linha.find('div', class_='linha-numero').text.strip()
+        nome = linha.find('div', class_='linha-nome').text.strip()
+        situacao = linha.find('div', class_='linha-situacao').text.strip()
+        info = linha.find('div', class_='linha-info')['title'].strip()
 
-for linha in linhas:
-    numero = linha.find('div', class_='linha-numero').text.strip()
-    nome = linha.find('div', class_='linha-nome').text.strip()
-    situacao = linha.find('div', class_='linha-situacao').text.strip()
-    info = linha.find('div', class_='linha-info')['aria-label']
+        linha_data = {
+            'numero': numero,
+            'nome': nome,
+            'situacao': situacao,
+            'info': info
+        }
 
-    linha_data = {
-        'numero': numero,
-        'nome': nome,
-        'situacao': situacao,
-        'info': info
-    }
-    
-    linhas_data.append(linha_data)
+        linhas_data.append(linha_data)
 
-with open('data/metro.json', 'w', encoding="utf-8") as f:
-    json.dump(linhas_data, f, ensure_ascii=False, indent=4)
-driver.quit()
+    # Salvando os dados extraídos em um arquivo JSON
+    with open('data/metro.json', 'w', encoding="utf-8") as f:
+        print("Dados salvos em 'metro.json'.")
+        json.dump(linhas_data, f, ensure_ascii=False, indent=4)
+
+else:
+    print(f"Erro ao acessar a página: {response.status_code}")
