@@ -18,11 +18,24 @@ def start_scheduler():
     #scheduler.add_job(coletar_dados_whats, 'interval', minutes=1)
     scheduler.start()
 
+def instalar_chromium():
+    try:
+        print("Instalando o Chromium...")
+        subprocess.run(["apt-get", "update"], check=True)  # Atualizando os pacotes
+        subprocess.run(["apt-get", "install", "-y", "chromium"], check=True)  # Instalando o Chromium
+        print("Chromium instalado com sucesso")
+    except subprocess.CalledProcessError as e:
+        print(f"Erro ao instalar o Chromium: {e}")
+
 
 @app.on_event("startup")
 async def on_startup():
+    print("Instalando chromium...")
+    instalar_chromium()
     print("Iniciando agendador...")
-    start_scheduler()  
+    start_scheduler()
+    
+ 
 
 @app.get("/", response_class=HTMLResponse)
 async def read_root():
