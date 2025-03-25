@@ -57,7 +57,7 @@
     
     <script>
         // Carregar dados do metro.json
-        fetch('/data/metro')
+        fetch('/dados/metro')
             .then(response => response.json())
             .then(data => {
                 const metroList = document.getElementById('metro-list');
@@ -70,7 +70,7 @@
             });
 
         // Carregar dados do trem.json
-        fetch('/data/trem')
+        fetch('/dados/trem')
             .then(response => response.json())
             .then(data => {
                 const tremList = document.getElementById('trem-list');
