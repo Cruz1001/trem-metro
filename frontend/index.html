@@ -38,7 +38,7 @@
 </head>
 <body>
     <div class="container">
-        <h1>Status Atual do Metrô e Trem</h1>
+        <h1>Status Atual do Metrô</h1>
 
         <div class="dados" id="metro">
             <h2>Status do Metrô</h2>
@@ -48,7 +48,7 @@
         </div>
 
         <div class="dados" id="trem">
-            <h2>Status dos Trilhos</h2>
+            <h2>Status da CPTM</h2>
             <ul id="trem-list">
                 
             </ul>
@@ -64,7 +64,7 @@
                 data.forEach(linha => {
                     const li = document.createElement('li');
                     li.classList.add('linha');
-                    li.innerText = `Linha ${linha.numero} (${linha.nome}): ${linha.situacao}<br><small>${linha.info}</small>`;
+                    li.innerHTML = `Linha ${linha.numero} (${linha.nome}): ${linha.situacao}<br><small>${linha.info}</small>`;
                     metroList.appendChild(li);
                 });
             });
