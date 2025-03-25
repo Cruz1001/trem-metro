@@ -28,7 +28,7 @@ def enviar_mensagem(mensagem):
         print(f'Erro ao enviar mensagem: {str(e)}')
 
 def atualizar():
-    url_atualizar: str = "http://localhost:8000/atualizar"
+    url_atualizar: str = "https://trem-metro.onrender.com/atualizar"
     response = requests.post(url_atualizar)
     print(response.json())
 
