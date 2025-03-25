@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Status do Metrô e Trem</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .dados {
+            margin: 20px 0;
+            padding: 10px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .linha, .trem {
+            margin-bottom: 15px;
+        }
+        .trem {
+            border-top: 1px solid #ddd;
+            padding-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Status Atual do Metrô e Trem</h1>
+
+        <div class="dados" id="metro">
+            <h2>Status do Metrô</h2>
+            <ul id="metro-list">
+                
+            </ul>
+        </div>
+
+        <div class="dados" id="trem">
+            <h2>Status dos Trilhos</h2>
+            <ul id="trem-list">
+                
+            </ul>
+        </div>
+    </div>
+    
+    <script>
+        // Carregar dados do metro.json
+        fetch('/data/metro')
+            .then(response => response.json())
+            .then(data => {
+                const metroList = document.getElementById('metro-list');
+                data.forEach(linha => {
+                    const li = document.createElement('li');
+                    li.classList.add('linha');
+                    li.innerText = `Linha ${linha.numero} (${linha.nome}): ${linha.situacao}<br><small>${linha.info}</small>`;
+                    metroList.appendChild(li);
+                });
+            });
+
+        // Carregar dados do trem.json
+        fetch('/data/trem')
+            .then(response => response.json())
+            .then(data => {
+                const tremList = document.getElementById('trem-list');
+                data.forEach(trem => {
+                    const li = document.createElement('li');
+                    li.classList.add('trem');
+                    li.innerHTML = `${trem.nome_linha}: ${trem.status}`;
+                    tremList.appendChild(li);
+                });
+            });
+    </script>

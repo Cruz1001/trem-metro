@@ -1,0 +1,30 @@
+[
+    {
+        "nome_linha": "LILÁS",
+        "status": "Operação Encerrada"
+    },
+    {
+        "nome_linha": "DIAMANTE",
+        "status": "Operação Encerrada"
+    },
+    {
+        "nome_linha": "ESMERALDA",
+        "status": "Operação Encerrada"
+    },
+    {
+        "nome_linha": "TURQUESA",
+        "status": "Operações Encerradas"
+    },
+    {
+        "nome_linha": "CORAL",
+        "status": "Operações Encerradas"
+    },
+    {
+        "nome_linha": "SAFIRA",
+        "status": "Operações Encerradas"
+    },
+    {
+        "nome_linha": "JADE",
+        "status": "Operações Encerradas"
+    }
+]
