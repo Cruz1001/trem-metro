@@ -1,9 +1,11 @@
+fastapi
+jinja2
+uvicorn
+apscheduler
+flask
+flask-cors
 requests
-python-dotenv
+beautifulsoup4
 selenium
 webdriver-manager
-beautifulsoup4
-fastapi
-apscheduler
-uvicorn
-jinja2
+dotenv
